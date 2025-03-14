@@ -56,8 +56,8 @@ The primary goal of this project is to answer the following central question: **
 
 <iframe
   src="assets/bivariate_scatter.html"
-  width="800"
-  height="600"
+  width="900"
+  height="700"
   frameborder="0"
 ></iframe>
 
