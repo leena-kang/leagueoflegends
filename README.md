@@ -18,7 +18,9 @@ The primary goal of this project is to answer the following central question: ==
 # Data Cleaning and Exploratory Data Analysis
 
 ## Data Cleaning 
-Final: 
+(final)
+
+
 | gameid                |   result | side   | position   |   gamelength |   team_kpm |   ckpm |
 |:----------------------|---------:|:-------|:-----------|-------------:|-----------:|-------:|
 | ESPORTSTMNT01_2690210 |        0 | blue   | top        |        28.55 |     0.3152 | 0.9807 |
@@ -30,7 +32,7 @@ Final:
 ## Univariate Analysis
 <iframe
   src="assets/univariate_team.html"
-  width="800"
+  width="850"
   height="600"
   frameborder="0"
 ></iframe>
