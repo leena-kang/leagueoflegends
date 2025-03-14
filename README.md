@@ -7,7 +7,7 @@ League of Legends (LoL) is one of the most popular team-based multiplayer online
 
 Understanding the key drivers of victory in LoL is significant not only for competitive players and analysts but also for amateur players and esports fans. Identifying and quantifying these winning conditions can offer players at all skill levels the insights needed to improve their own gameplay and strategy. Additionally, being able to predict the likelihood of a team’s victory (_especially based on early-game performance_) provides viewers with a deeper understanding of match dynamics, enhancing their experience and enjoyment of the game. 
 
-The primary goal of this project is to answer the following central question: **Amongst mid-laners, what are the most significant factors that contribute to a team's victory in a League of Legends match?** We will leverage in-game metrics to perform data and statistical analyses, and design, train, and evaluate predictive models to investigate if these measures hold predictive power (but more on that later!)
+The primary goal of this project is to answer the following central question: ==**Amongst mid-laners, what are the most significant factors that contribute to a team's victory in a League of Legends match?**== We will leverage in-game metrics to perform data and statistical analyses, and design, train, and evaluate predictive models to investigate if these measures hold predictive power (but more on that later! :joy:)
 
 ## The Dataset 
 - where the dataset is from, what year 
@@ -16,7 +16,16 @@ The primary goal of this project is to answer the following central question: **
 
 
 # Data Cleaning and Exploratory Data Analysis
-- **HEAD OF DF**
+
+## Data Cleaning 
+Final: 
+| gameid                |   result | side   | position   |   gamelength |   team_kpm |   ckpm |
+|:----------------------|---------:|:-------|:-----------|-------------:|-----------:|-------:|
+| ESPORTSTMNT01_2690210 |        0 | blue   | top        |        28.55 |     0.3152 | 0.9807 |
+| ESPORTSTMNT01_2690210 |        0 | blue   | jng        |        28.55 |     0.3152 | 0.9807 |
+| ESPORTSTMNT01_2690210 |        0 | blue   | mid        |        28.55 |     0.3152 | 0.9807 |
+| ESPORTSTMNT01_2690210 |        0 | blue   | bot        |        28.55 |     0.3152 | 0.9807 |
+| ESPORTSTMNT01_2690210 |        0 | blue   | sup        |        28.55 |     0.3152 | 0.9807 |
 
 ## Univariate Analysis
 <iframe
@@ -31,7 +40,6 @@ The primary goal of this project is to answer the following central question: **
 
 ## Interesting Aggregates 
 - **PIVOT TABLE**
-
 
 
 
