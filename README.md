@@ -10,16 +10,95 @@ Understanding the key drivers of victory in LoL is significant not only for comp
 The primary goal of this project is to answer the following central question: **Amongst mid-laners, what are the most significant factors that contribute to a team's victory in a League of Legends match?** We will leverage in-game metrics to perform data and statistical analyses, and design, train, and evaluate predictive models to investigate if these measures hold predictive power (but more on that later! 😊)
 
 ## The Dataset 
-- where the dataset is from, what year 
-- number of rows, number of columns (and then mention the columns only included)
-- columns + description 
+The dataset was adopted from [Oracle's Elixir](https://oracleselixir.com/tools/downloads), which provides various game statistics of individual players, as well as a summary of each team for each game. The files are accessed through a google drive, and for this project, we used the matches from 2022. This dataset contains _148992_ rows and _161_ columns, but we only saved the columns that could be relevant for this project. Below are brief descriptions about each column:
+
+- `gameid`: Unique ID for a specific game.
+
+  >  This **not** unique across all rows, but instead there 12 rows per `gameid`: 10 rows are for the 10 total players in a match, and last 2 contain summary data for the blue and red team. 
+
+- `participantid`: The player number in a game. Note this is **not** a unique key for each player. Possible values are 1-10, 100, or 200. Note that 100 and 200 represents the whole team, and 1-10 represents each player. 
+
+- `result`: Outcome of a match. 1 indicates that the team/player won this match, and 0 if they lost.
+
+- `side`: Indicates whether they a player/team is associated with the `blue` team or `red` team. 
+
+- `position`: The position/role each of player. If the value is `team`, the row corresponds to the team summary data. 
+
+- `gamelength`: 
+
+- `kills`: 
+
+- `deaths`: 
+
+- `assists`: 
+
+- `firstblood`: 
+
+- `firstherald`: 
+
+- `team kpm`: 
+
+- `ckpm`: 
+
+- `vspm`: 
+
+- `visionscore`: 
+
+- `cspm`: 
+
+- `total cs`:
+
+- `earned gpm`: 
+
+- `dpm`: 
+
+- `damagetochampions`: 
+
+- `totalgold`: 
+
+- `split`: 
+
+- `firstmidtower`
+
+- `goldat15`: 
+
+- `xpat15`: 
+
+- `csat15`: 
+
+- `opp_goldat15`
+
+- `opp_xpat15`: 
+
+- `opp_csat15`: 
+
+- `golddiffat15`: 
+
+- `xpdiffat15`: 
+
+- `csdiffat15`: 
+
+- `killsat15`: 
+
+- `assistsat15`: 
+
+- `deathsat15`: 
+
+- `opp_killsat15`: 
+
+- `opp_assistsat15`: 
+
+- `opp_deathsat15`: 
+
+
+
 
 
 # Data Cleaning and Exploratory Data Analysis
 
 
 ## Data Cleaning 
-(final)
+##### Here are the first 5 rows and the first 7 columns of our cleaned, dataset!
 
 
 | gameid                |   result | side   | position   |   gamelength |   team_kpm |   ckpm |
