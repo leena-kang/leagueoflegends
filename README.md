@@ -278,7 +278,7 @@ Observe the Dataframe below, which displays the proportion of `firstmidtower` mi
 <iframe
   src="assets/missingness_split_dist.html"
   width="700"
-  height="500"
+  height="300"
   frameborder="0"
 ></iframe>
 
@@ -317,7 +317,7 @@ Here are 2 histograms of `damagetochampions`-- one is the distribution of `damag
 ></iframe>
 
 
-Simular to the previous permutation test, we want to investigate if the missingness of `fisrtmidtower` depends on `damagetochampions`. 
+Similar to the previous permutation test, we want to investigate if the missingness of `fisrtmidtower` depends on `damagetochampions`. 
 
 ### Permutation Test: `damagetochampion` and `firstmidtower` 
 
