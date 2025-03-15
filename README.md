@@ -278,7 +278,7 @@ Observe the Dataframe below, which displays the proportion of `firstmidtower` mi
 <iframe
   src="assets/missingness_split_dist.html"
   width="700"
-  height="300"
+  height="400"
   frameborder="0"
 ></iframe>
 
