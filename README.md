@@ -278,7 +278,7 @@ Observe the Dataframe below, which displays the proportion of `firstmidtower` mi
 <iframe
   src="assets/missingness_split_dist.html"
   width="700"
-  height="400"
+  height="450"
   frameborder="0"
 ></iframe>
 
@@ -294,16 +294,16 @@ Observe the Dataframe below, which displays the proportion of `firstmidtower` mi
 - **Significance Level**: 5%
 
 ### Results and Conclusion
-After simulating TVD's under the null hypothesis, we have found that the P-value is 1.0. Below is the empirical distribution of our simulated TVD's:  
+After simulating TVD's under the null hypothesis, we have found that the p-value is 1.0. Below is the empirical distribution of our simulated TVD's:  
 
 <iframe
   src="assets/missingness_emp_dist.html"
-  width="900"
-  height="700"
+  width="700"
+  height="450"
   frameborder="0"
 ></iframe>
 
-Since our **P-value > 0.05**, we **fail to reject** the null hypothesis. We have sufficient evidence to conclude that the distributions of `split` between missingness and non-missingness of `firstmidtower` came from the same distribution, i.e., any variation is most likey due to chance. Thus, this suggests that the **missingness of `firstmidtower` does not depend on `split`.** 
+Since our **p-value > 0.05**, we **fail to reject** the null hypothesis. We have sufficient evidence to conclude that the distributions of `split` between missingness and non-missingness of `firstmidtower` came from the same distribution, i.e., any variation is most likey due to chance. Thus, this suggests that the **missingness of `firstmidtower` does not depend on `split`.** 
 
 ### Setup and Motivation: `damagetochampions` and `firstmidtower` 
 
@@ -311,8 +311,8 @@ Here are 2 histograms of `damagetochampions`-- one is the distribution of `damag
 
 <iframe
   src="assets/missingness_dmg_dist.html"
-  width="900"
-  height="700"
+  width="700"
+  height="450"
   frameborder="0"
 ></iframe>
 
@@ -331,12 +331,12 @@ Similar to the previous permutation test, we want to investigate if the missingn
 - **Significance Level**: 5%
 
 ### Results and Conclusion 
-After simulating TVD's under the null hypothesis, we have found that the P-value is 0.0. Below is the empirical distribution of our simulated KS statistics: 
+After simulating TVD's under the null hypothesis, we have found that the p-value is 0.0. Below is the empirical distribution of our simulated KS statistics: 
 
 <iframe
   src="assets/missingness_ks_dist.html"
-  width="900"
-  height="700"
+  width="700"
+  height="450"
   frameborder="0"
 ></iframe>
 
@@ -351,32 +351,68 @@ First, let's take a deeper dive in a mid laner's **kill participation per minute
 
 <iframe
   src="assets/hyp_kppm_dist.html"
-  width="900"
-  height="700"
+  width="700"
+  height="450"
   frameborder="0"
 ></iframe>
 
 ### Evaluating KPPM means amongst Mid-laners from Winning/Losing Teams
 We will conduct the following permutation test: 
 
-**Null Hypothesis**: Kill Participation per minute (KPPM) of mid-laners from winning and losing teams have the same distribution, thus any observed difference from our sample is due to random chance. p
-**Alternative Hypothesis**: Winning mid-laners have a higher KPPM on average compared to mid-laners from a losing team. The observed difference in our sample cannot be explained by random choice alone. 
+**Null Hypothesis**: Kill Participation per minute (KPPM) of mid-laners from winning and losing teams have the same distribution, thus any observed difference from our sample is due to random chance. 
 
-- **Test Statistic**: Since both distributions resemble a similar bell shape, we will use *__difference in group means__* (Winning - losing)
+**Alternative Hypothesis**: Winning mid-laners have a **higher KPPM** on average compared to mid-laners from a losing team. The observed difference in our sample cannot be explained by random choice alone. 
+
+- **Test Statistic**: Difference in group means (Winning - Losing)
+> Since both distributions resemble a similar bell shape, we will use difference in group means
+
 - **Significance Level**: 5%
 
-
 ### Results and Conclusion
+After simulating these KPPM group means, we get a **p-value** or **0.0**. The empirical distribution of the mean differences of KPPM of Mid Laners is shown below: 
+
+<iframe
+  src="assets/hyp_kppm.html"
+  width="700"
+  height="450"
+  frameborder="0"
+></iframe>
+
+Since the p-value < 0.05, we **reject the null hypothesis**. We have sufficient evidence to conclude that mid-laners from winning teams has a higher average KPPM than mid-laners from losing teams.
 
 
+### Testing the remaining aggregate group means amongst mid laners
+Let's apply the same hypothesis test as above, but with `vspm`, `cspm`, `dpm`, `earned_gpm`
+
+Below is a Dataframe with the feature of interest, and the resulting p-value, using the same test as above: 
+
+|        |   kppm |   vspm |   cspm |   dpm |   earned_gpm |
+|:-------|-------:|-------:|-------:|------:|-------------:|
+| pvalue |      0 |      0 |      0 |     0 |            0 |
+
+
+We observe that all p-values are close to 0, so we reject the null for every test. Thus, we have sufficient evidence to conclude that **mid laners from winning teams, on average, have a higher `kppm`, `vspm`, `cspm`, `dpm`, and `earned_gpm` than mid laners from losing teams.** 
 
 
 # Framing a Prediction Problem 
-- Can a mid-laner's performance within the first 15 miniutes reliably predict game outcomes?
+Knowing that there are significant game-metric differences between mid laners from winning and losing teams, we propose the following prediction problem: **Can a mid laner's performance within the first 15 miniutes reliably predict game outcomes?**
 
-## Problem Identification 
+To answer this question, we will design, train, and evaluate a **binary classification model** that predicts if the player won or lost their LoL match, provided only with their in-game statistics 15 minutes in the game
 
+## Setup 
+- **Model**: Binary classification (random forest classifier) 
 
+- **Target/Response Variable**: `result` (1 will indicate that the player won, and 0 will indicate that the player lost.)
+> We chose `result` as this column directly answers what we are trying to predict, i.e., the game outcome. 
+
+- **Performance Metric**: Accuracy and F1-Score 
+> **Why F1-Score?**
+  > Predicting falsely whether a team won or not is of equal importance. Thus, we will F1 score as a performance evaluation method, since we care equally on the model's precision and recall score. 
+
+> **Why Accuracy?**
+  > We will see later that our dataset is pretty balanced between each class (win or lose). Also, since misclassification is equally costly for each class, accuracy provides a reliable overall measure of our model performance.
+
+- **What kind of features can we use to train our model?**: Since we are trying game outcome within 15 minutes into it, we can only use metrics that are measured within those 15 minutes. In this case, these are the columns in our Dataframe that has "at15" in it's name, and any "event" that is highly probably to have occured within 15 minutes (_but more on that later!_)
 
 
 # Baseline Model 
