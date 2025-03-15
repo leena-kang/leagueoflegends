@@ -296,6 +296,7 @@ Observe the Dataframe below, which displays the proportion of `firstmidtower` mi
 **Alternative Hypothesis**: The distribution of `split` for when `firstmidtower` is missing is the **NOT** the same as the distribution of `split` for when `firstmidtower` is not missing.
 
 **Test Statistic**: Total Variation Distance (TVD) 
+
 **Significance Level**: 5%
 
 ### Results and Conclusion
@@ -545,8 +546,6 @@ With our final model, we are going to assess whether are model is fair across ba
 
 **Evaluation metric**: Accuracy
 
-**Significance Level**: 5%
-
 Below are the observed accuracy scores when we making predictions with our final model, separated by each group defined above: 
 
 
@@ -566,6 +565,9 @@ Below are the observed accuracy scores when we making predictions with our final
 
 **Test Statistic**: Difference in accuracy (Group `X` minus Group `Y`)
 
+**Significance Level**: 5%
+
+
 ## Results and Conclusion 
 After simulating these accuracy differences under the null hypothesis, we get a **p-value of 0.084**. Below is the empirical distribution these simulated differences: 
 
@@ -577,6 +579,6 @@ After simulating these accuracy differences under the null hypothesis, we get a 
 ></iframe>
 
 
-Since our p-value (0.084) is greater than 0.05, we fail to reject the null hypothesis. Thus, have sufficient evidence to conclude that any differences in accuracy scores between players with a non-negative and negatve `csdiffat15` values are most likely due to random chance. Consequently, the classifer does not seem to demonstrate any unfairness within these groups. 
+Since our p-value > 0.05, we **fail to reject the null hypothesis**. Thus, we have sufficient evidence to conclude that any differences in accuracy scores between players with a non-negative and negatve `csdiffat15` values are most likely due to random chance. Consequently, the **classifer does not seem to demonstrate any unfairness within these groups**. 
 
 
