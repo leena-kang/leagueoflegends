@@ -277,13 +277,12 @@ Observe the Dataframe below, which displays the proportion of `firstmidtower` mi
 
 <iframe
   src="assets/missingness_split_dist.html"
-  width="900"
-  height="700"
+  width="700"
+  height="500"
   frameborder="0"
 ></iframe>
 
-> ** Are these observed differences between `fmt_missing = false` and `fmt_missing = true` statistically significant?
-
+> ** Are these observed differences between `fmt_missing = false` and `fmt_missing = true` statistically significant?**
 
 ### Permutation Test: `firstmidtower` and `split` 
 
@@ -346,7 +345,30 @@ After simulating TVD's under the null hypothesis, we have found that the P-value
 Since the p-value < 0.05, we **reject the null hypothesis**. We have sufficient evidence to conclude that the missingness of `firstmidtower` depends on the `damagetochampions` column. This suggests that the **missingness of `firstmidtower` does depend on `damagetochamptions`.
 
 # Hypothesis Testing 
-- **EMP DIST**
+In this hypothesis test, we want to see if the game metric differences between mid laners from winning and losing teams (_explored in our bivariate analysis!_) are significant. This will allow us to further investigate the significant differences between mid laners that win or lose, and thus have a better understanding on the main drivers for winning teams! 
+
+First, let's take a deeper dive in a mid laner's **kill participation per minute** (KPPM)
+
+<iframe
+  src="assets/hyp_kppm_dist.html"
+  width="900"
+  height="700"
+  frameborder="0"
+></iframe>
+
+### Evaluating KPPM means amongst Mid-laners from Winning/Losing Teams
+We will conduct the following permutation test: 
+
+**Null Hypothesis**: Kill Participation per minute (KPPM) of mid-laners from winning and losing teams have the same distribution, thus any observed difference from our sample is due to random chance. p
+**Alternative Hypothesis**: Winning mid-laners have a higher KPPM on average compared to mid-laners from a losing team. The observed difference in our sample cannot be explained by random choice alone. 
+
+- **Test Statistic**: Since both distributions resemble a similar bell shape, we will use *__difference in group means__* (Winning - losing)
+- **Significance Level**: 5%
+
+
+### Results and Conclusion
+
+
 
 
 # Framing a Prediction Problem 
