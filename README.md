@@ -238,7 +238,7 @@ Below is a Dataframe that is grouped by positions and result (whether that playe
 
 
 Its worth noting here that for each position, all of the **winning teams** tend to have a **higher average** in **all columns**. 
-> We will be investigating later *_if these differences are statistically significant_*, so that we can make stronger conclusions about the differences in performance between winning and losing players!
+> We will be investigating later if these differences are statistically significant, so that we can make stronger conclusions about the differences in performance between winning and losing players!
 
 # Assessment of Missingness 
 
@@ -251,9 +251,99 @@ Its worth noting here that for each position, all of the **winning teams** tend 
 - We will investigate  further whether the missingness of `firstmidtower` could be dependent on the other columns. 
 
 ## Missingness Dependency 
-- **COL DIST**
-- **EMPIRICAL DIST**
 
+### Setup and Motivation: `firstmidtower` and `split`
+
+Observe the Dataframe below, which displays the proportion of `firstmidtower` missing and not missing for each category in `split`: 
+
+| split   |   fmt_missing = false |   fmt_missing = true |
+|:--------|----------------------:|---------------------:|
+| 2022    |            0.00187705 |           0.00187684 |
+| Regular |            0.0035664  |           0.003566   |
+| Pro-Am  |            0.00675739 |           0.00675663 |
+| Closing |            0.00844674 |           0.00844579 |
+| Opening |            0.00844674 |           0.00844579 |
+| Champ 1 |            0.00938527 |           0.00938421 |
+| Fall    |            0.0107931  |           0.0109044  |
+| Champ 2 |            0.0119193  |           0.0119179  |
+| Winter  |            0.0191459  |           0.0191438  |
+| Split 2 |            0.0396058  |           0.0396014  |
+| Split 1 |            0.0565931  |           0.0565868  |
+| Spring  |            0.245894   |           0.245866   |
+| Summer  |            0.2626     |           0.26257    |
+| missing |            0.314969   |           0.314934   |
+
+#### Lets visualize this! 
+
+<iframe
+  src="assets/missingness_split_dist.html"
+  width="900"
+  height="700"
+  frameborder="0"
+></iframe>
+
+> ** Are these observed differences between `fmt_missing = false` and `fmt_missing = true` statistically significant?
+
+
+### Permutation Test: `firstmidtower` and `split` 
+
+**Null Hypothesis**: The distribution of `split` for when `firstmidtower` is missing (`NaN`) is the same as the distribution of `split` for when `firstmidtower` is _not_ missing. Any variation between the two is due to random chance. 
+
+**Alternative Hypothesis**: The distribution of `split` for when `firstmidtower` is missing (`NaN`) is the **NOT** same as the distribution of `split` for when `firstmidtower` is _not_ missing.
+
+- **Test Statistic**: Total Variation Distance (TVD) 
+- **Significance Level**: 5%
+
+### Results and Conclusion
+After simulating TVD's under the null hypothesis, we have found that the P-value is 1.0. Below is the empirical distribution of our simulated TVD's:  
+
+<iframe
+  src="assets/missingness_emp_dist.html"
+  width="900"
+  height="700"
+  frameborder="0"
+></iframe>
+
+Since our **P-value > 0.05**, we **fail to reject** the null hypothesis. We have sufficient evidence to conclude that the distributions of `split` between missingness and non-missingness of `firstmidtower` came from the same distribution, i.e., any variation is most likey due to chance. Thus, this suggests that the **missingness of `firstmidtower` does not depend on `split`.** 
+
+### Setup and Motivation: `damagetochampions` and `firstmidtower` 
+
+Here are 2 histograms of `damagetochampions`-- one is the distribution of `damagetochampions` with their `firstmidtower` missing, and the latter not missing: 
+
+<iframe
+  src="assets/missingness_dmg_dist.html"
+  width="900"
+  height="700"
+  frameborder="0"
+></iframe>
+
+
+Simular to the previous permutation test, we want to investigate if the missingness of `fisrtmidtower` depends on `damagetochampions`. 
+
+### Permutation Test: `damagetochampion` and `firstmidtower` 
+
+**Null Hypothesis**: The distribution of `damagetochampions` for when `firstmidtower` is missing (`NaN`) is the same as the distribution of `damagetochampions` for when `firstmidtower` is _not_ missing. Any variation between the two is due to random chance. 
+
+**Alternative Hypothesis**: The distribution of `damagetochamptions` for when `firstmidtower` is missing (`NaN`) is the **NOT** same as the distribution of `split` for when `firstmidtower` is _not_ missing.
+
+- **Test Statistic**: Kolmogorov-Smirnov (KS) statistic
+  > Note that since the distributions of `damagetochampions` for null and non-null values of `firstmidtower` have different shapes (`fmt_missing == True` is more right skewed, whereas `fmt_missing == False` resembles more of a bell shape). Thus, we will use the KS Statistic as opposed to difference in group means for this test.
+
+- **Significance Level**: 5%
+
+### Results and Conclusion 
+After simulating TVD's under the null hypothesis, we have found that the P-value is 0.0. Below is the empirical distribution of our simulated KS statistics: 
+
+<iframe
+  src="assets/missingness_ks_dist.html"
+  width="900"
+  height="700"
+  frameborder="0"
+></iframe>
+
+> Note that the observed ks-statistic (0.94) **far to the right** of this distribution-- feel free to use the pan feature on this graph and find it! 
+
+Since the p-value < 0.05, we **reject the null hypothesis**. We have sufficient evidence to conclude that the missingness of `firstmidtower` depends on the `damagetochampions` column. This suggests that the **missingness of `firstmidtower` does depend on `damagetochamptions`.
 
 # Hypothesis Testing 
 - **EMP DIST**
