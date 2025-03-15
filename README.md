@@ -12,7 +12,7 @@ The primary goal of this project is to answer the following central question: **
 ## The Dataset 
 The dataset was adopted from [Oracle's Elixir](https://oracleselixir.com/tools/downloads), which provides various game statistics of individual players, as well as a summary of each team for each game. The files are accessed through a google drive, and for this project, we used the matches from 2022. This dataset contains _148992_ rows and _161_ columns, but we only saved the columns that could be relevant for this project. Below are brief descriptions about each column:
 
-##### Unfamiliar with LoL? Here are some basic terminology to better understand the data!
+### Unfamiliar with LoL? Here are some basic terminology to better understand the data!
 > **Creep Score (CS)**: The number of enemy minions (small AI-controlled units) a player has defeated. More CS means more resources for the player.
 
 > **Vision Score**: A measure of how well a player provides vision for their team by placing wards (which reveal areas of the map) and removing enemy wards.
@@ -27,6 +27,7 @@ The dataset was adopted from [Oracle's Elixir](https://oracleselixir.com/tools/d
 
 > **First Blood**: The first kill of the game, which grants bonus gold to the player who secures it, giving an early advantage.
 
+### Column Descriptions
 - `gameid`: Unique ID for a specific game.
 
   >  This **not** unique across all rows, but instead there 12 rows per `gameid`: 10 rows are for the 10 total players in a match, and last 2 contain summary data for the blue and red team. 
@@ -112,20 +113,20 @@ The dataset was adopted from [Oracle's Elixir](https://oracleselixir.com/tools/d
 ## Data Cleaning 
 Below are the main steps taken in the data cleaning process:  
 
-##### Naming conventions
+### Naming conventions
 There are some inconsistencies with the column names-- some has a space in between words, while some are separated by an underscore ('\_'). Here we changed all column names such that **any space is replaced with '_'**. 
 
 There are also inconsistencies with the capitalization of String values on certain columns. For all String values, we ensured all letters are **lowercased**. 
 
 Ensuring uniformity across all column names and values will allow for a more convenient analysis to be performed movign forward, especially with datasets with an extensive amount of columns!
 
-##### Adding/Scaling Columns 
+### Adding/Scaling Columns 
 `gamelength` originally came as seconds, but for readability, we converted the columns to minutes. 
 
 We added a new column, `kppm`, which represents the **kill participation per minute**. Often times a player's contribution/performance is evaluated based on both assists and kills, so `kppm` combines the two 
 - In short, `kppm` = ((kills + assists) / gamelength)
 
-##### Handling Null Values 
+### Handling Null Values 
 Some columns, in the way they are constructed, are null for rows that represent the entire team and vice versa. However, some are null when they can intuitively computed. 
 
 For example, `total_cs` is null for all team-based rows (_i.e., `position == 'team'`_), however this _could_ be imputed as the sum of all creep scores of each player in the team. So, we **imputed** these null values with the **accumlated creep score** within each corresponding team. 
@@ -148,7 +149,7 @@ After running this procedure, we get a dataframe with *127872* rows and *39* col
 
 ## Univariate Analysis
 
-##### Team-wide Distributions 
+### Team-wide Distributions 
 Here, we will visualize the distribution of certain game-metrics to get a better sense of how the data is spread (team-wide). 
 
 <iframe
@@ -161,7 +162,7 @@ Here, we will visualize the distribution of certain game-metrics to get a better
 It appears that Game Length, Total Gold, Vision Score, Total Creep Score, Damage to Champions, and Kill Participation all resemble a bell-curve, where some have a slight skewness to the right. 
 > Note that the data here are only correspond to the rows that are team summaries (_i.e., `position == 'team'`). 
 
-##### Mid lane Distributions 
+### Mid lane Distributions 
 Below are histograms of the same metrics from before, except for **mid lane players only***. 
 
 <iframe
@@ -176,7 +177,7 @@ We see that the distributions here are very similar to the entire team-wide dist
 
 ## Bivariate Analysis 
 
-##### Comparing Winning and Losing Mid Lane players 
+### Comparing Winning and Losing Mid Lane players 
 Here we will continue to look investgate further in mid laners only. Below are boxplots of several game metrics of mid lane players, split between players that won and lost their respective match. 
 
 <iframe
@@ -188,7 +189,7 @@ Here we will continue to look investgate further in mid laners only. Below are b
 
 Amongst mid lane players, it appears that on average, mid laners from a winning team have higher metrics compared to its losing counterpart on **all** features, the greatest deviation being Earned Gold/min (`earned_gpm`) and Kill Participation/min (`kppm`)
 
-##### Identifying Correlated Columns 
+### Identifying Correlated Columns 
 Many columns are intuitively dependent on each other, but here will identify which columns are more correlated to each than others by visualizing their correlations through a **heatmap**.  
 
 <iframe
@@ -204,7 +205,7 @@ Notice that `kppm` + `team_kppm` and `goldat15` + `earned_gpm` essentially colle
 3. `dpm` and `kppm`
 4. `ckpm` and `csat15`
 
-##### Graphing Noticeable Correlated Features
+### Graphing Noticeable Correlated Features
 
 <iframe
   src="assets/bivariate_scatter.html"
