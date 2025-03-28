@@ -1,4 +1,6 @@
-# League of Legends Mid Lane Performance Analysis
+# League of Legends: Winning Predictions in 15 Minutes
+### Mid-lane Performance Analysis
+
 
 Author: Leena Kang 
 
